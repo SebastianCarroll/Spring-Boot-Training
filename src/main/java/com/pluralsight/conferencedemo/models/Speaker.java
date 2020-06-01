@@ -1,5 +1,6 @@
 package com.pluralsight.conferencedemo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -23,6 +24,10 @@ public class Speaker {
     private byte[] speaker_photo;
 
     @ManyToMany(mappedBy = "speakers")
+    // this is supposed to (and does) stop the loop in the graph, where by requesting for all speakers,
+    // then finds all the sessions, then finds all the speakers, then all the sessions, etc, etc
+    // How does this annotation actually stop that though? 
+    @JsonIgnore
     private List<Session> sessions;
 
     public Speaker() {
