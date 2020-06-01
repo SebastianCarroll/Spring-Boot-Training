@@ -1,12 +1,16 @@
 package com.pluralsight.conferencedemo.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity(name = "speakers")
+// This is to avoid some of the extra sections that hibernate adds i think to deal with lazy loading
+// an da few other features? Not sure exactly
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Speaker {
 
     @Id
@@ -26,7 +30,7 @@ public class Speaker {
     @ManyToMany(mappedBy = "speakers")
     // this is supposed to (and does) stop the loop in the graph, where by requesting for all speakers,
     // then finds all the sessions, then finds all the speakers, then all the sessions, etc, etc
-    // How does this annotation actually stop that though? 
+    // How does this annotation actually stop that though?
     @JsonIgnore
     private List<Session> sessions;
 

@@ -1,9 +1,14 @@
 package com.pluralsight.conferencedemo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity(name = "sessions")
+// This is to avoid some of the extra sections that hibernate adds i think to deal with lazy loading
+// an da few other features? Not sure exactly
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Session {
 
     // Keeping the names exactly the same as in the DB means spring/jpa will autobind
